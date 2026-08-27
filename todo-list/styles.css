@@ -1,5 +1,26 @@
+@font-face {
+    font-family: "Friend";
+    src: url("assets/fonts/Friend-font/Friend.otf") format("opentype");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Friend";
+    src: url("assets/fonts/Friend-font/Friend-Bold.otf") format("opentype");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Friend";
+    src: url("assets/fonts/Friend-font/Friend-Italic.otf") format("opentype");
+    font-weight: 400;
+    font-style: italic;
+}
+
 body {
-    font-family: "Enrique";
+    font-family: "Friend", sans-serif;
 }
 
 .center-section {
