@@ -14,6 +14,7 @@
 - Keep desktop-only code separate from renderer/UI code.
 - Do not expose unrestricted Node.js or file-system access to the renderer.
 - Use clear names and short comments only where they improve understanding.
+- Never speculate about code that you haven't opened. If the programmer has referenced a file or some lines of code, you must check thsoe files or lines of code out before making any changes or answering questions. Also do not state claims about anything existing without being 100% sure.
 
 ## Before finishing a change
 
