@@ -32,8 +32,7 @@ body {
     flex: 1;
 }
 
-.left-sidebar,
-.right-sidebar {
+.sidebar {
     flex: 1;
     background-color: #f1f1f1;
 }
@@ -52,7 +51,7 @@ body {
 }
 
 .add-task{
-    padding:32px;
+    padding:40px;
 }
 
 .add-task-button {
