@@ -22,8 +22,3 @@
 - Manually check that the app starts and the changed flow works.
 - Keep user task data backward-compatible, or provide a migration when changing its format.
 - Double check to see if it's doing what the user asked.
-
-## After finishing a change
-
-- Provide of summary of the changes you've made to ensure the developer is keeping up with the program
-- Explain any changes made to the codebase as if someone is familiar with programming but trying to get onboard the project
