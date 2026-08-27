@@ -448,8 +448,9 @@ export default function Home() {
           </div>
 
           <div className="focus-quote">
-            <span className="quote-mark" aria-hidden="true">“</span>
+            <span className="quote-mark quote-mark-open" aria-hidden="true">“</span>
             <p>Make room for what matters. The rest can wait.</p>
+            <span className="quote-mark quote-mark-close" aria-hidden="true">”</span>
           </div>
 
           <div className="tip-card">
