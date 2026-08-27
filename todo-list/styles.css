@@ -1,0 +1,51 @@
+body {
+    font-family: "Enrique";
+}
+
+.center-section {
+    display: flex;
+}
+
+.left-sidebar,
+.right-sidebar {
+    flex: 1;
+}
+
+.center-tasks {
+    flex: 3;
+}
+
+.header{
+    display:flex;
+    justify-content: center;
+}
+
+.add-task-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #242424;
+    font: inherit;
+    cursor: pointer;
+}
+
+.add-task-icon {
+    display: inline-grid;
+    width: 1.5rem;
+    height: 1.5rem;
+    place-items: center;
+    border: 1px solid #737373;
+    border-radius: 50%;
+    color: #737373;
+    font-size: 1.25rem;
+    line-height: 1;
+}
+
+.add-task-button:hover .add-task-icon,
+.add-task-button:focus-visible .add-task-icon {
+    border-color: #242424;
+    color: #242424;
+}

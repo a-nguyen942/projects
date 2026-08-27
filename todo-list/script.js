@@ -1,10 +1,7 @@
 const USER = "Tony";
 
 const welcomeText = document.createElement("h1");
-
-
-
-
+const header = document.querySelector(".header");
 
 welcomeText.textContent = `Welcome, ${USER}`;
-document.body.appendChild(welcomeText);
+header.appendChild(welcomeText);
