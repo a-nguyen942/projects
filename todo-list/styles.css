@@ -20,25 +20,39 @@
 }
 
 body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
     font-family: "Friend", sans-serif;
 }
 
 .center-section {
     display: flex;
+    flex: 1;
 }
 
 .left-sidebar,
 .right-sidebar {
     flex: 1;
+    background-color: #f1f1f1;
 }
 
 .center-tasks {
-    flex: 3;
+    flex: 5;
 }
 
 .header{
     display:flex;
     justify-content: center;
+}
+
+.footer {
+    min-height: 3rem;
+}
+
+.add-task{
+    padding:32px;
 }
 
 .add-task-button {
