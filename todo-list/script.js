@@ -13,6 +13,7 @@ function createTask() {
     const deleteButton = document.createElement("button");
     const taskNameInput = document.createElement("input");
     const taskDescriptionInput = document.createElement("textarea");
+    const taskCardFooter = document.createElement("footer");
 
     taskCard.className = "task-card";
 
@@ -31,7 +32,9 @@ function createTask() {
     taskDescriptionInput.placeholder = "Task description";
     taskDescriptionInput.setAttribute("aria-label", "Task description");
 
-    taskCard.append(deleteButton, taskNameInput, taskDescriptionInput);
+    taskCardFooter.className = "task-card-footer";
+
+    taskCard.append(deleteButton, taskNameInput, taskDescriptionInput, taskCardFooter);
     taskContent.appendChild(taskCard);
     taskNameInput.focus();
 }
