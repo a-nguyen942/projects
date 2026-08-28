@@ -14,6 +14,9 @@ function createTask() {
     const taskNameInput = document.createElement("input");
     const taskDescriptionInput = document.createElement("textarea");
     const taskCardFooter = document.createElement("footer");
+    const priorityButton = document.createElement("button");
+    const reminderButton = document.createElement("button");
+    const saveButton = document.createElement("button");
 
     taskCard.className = "task-card";
 
@@ -34,6 +37,19 @@ function createTask() {
 
     taskCardFooter.className = "task-card-footer";
 
+    priorityButton.className = "task-footer-button task-priority-button";
+    priorityButton.type = "button";
+    priorityButton.textContent = "⚑ Priority";
+
+    reminderButton.className = "task-footer-button task-reminder-button";
+    reminderButton.type = "button";
+    reminderButton.textContent = "◷ Reminder";
+
+    saveButton.className = "task-footer-button task-save-button";
+    saveButton.type = "button";
+    saveButton.textContent = "➤ Save";
+
+    taskCardFooter.append(priorityButton, reminderButton, saveButton);
     taskCard.append(deleteButton, taskNameInput, taskDescriptionInput, taskCardFooter);
     taskContent.appendChild(taskCard);
     taskNameInput.focus();
