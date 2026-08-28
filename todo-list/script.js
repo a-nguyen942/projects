@@ -3,10 +3,18 @@ let USER = "Tony";
 const welcomeText = document.createElement("h1");
 const header = document.querySelector(".header");
 const addTaskButton = document.querySelector(".add-task-button");
+const centerTask = document.querySelector(".center-task");
 const taskContent = document.querySelector(".center-task-content");
+const savedTaskContent = document.querySelector(".center-task-saved");
 
 welcomeText.textContent = `Welcome, ${USER}`;
 header.appendChild(welcomeText);
+
+function updateDraftingState() {
+    const hasDrafts = taskContent.querySelector(".task-card") !== null;
+
+    centerTask.classList.toggle("is-drafting", hasDrafts);
+}
 
 function createTask() {
     const taskCard = document.createElement("article");
@@ -24,7 +32,10 @@ function createTask() {
     deleteButton.type = "button";
     deleteButton.textContent = "×";
     deleteButton.setAttribute("aria-label", "Delete task");
-    deleteButton.addEventListener("click", () => taskCard.remove());
+    deleteButton.addEventListener("click", () => {
+        taskCard.remove();
+        updateDraftingState();
+    });
 
     taskNameInput.className = "task-name-input";
     taskNameInput.type = "text";
@@ -48,10 +59,15 @@ function createTask() {
     saveButton.className = "task-footer-button task-save-button";
     saveButton.type = "button";
     saveButton.textContent = "➤ Save";
+    saveButton.addEventListener("click", () => {
+        savedTaskContent.appendChild(taskCard);
+        updateDraftingState();
+    });
 
     taskCardFooter.append(priorityButton, reminderButton, saveButton);
     taskCard.append(deleteButton, taskNameInput, taskDescriptionInput, taskCardFooter);
     taskContent.appendChild(taskCard);
+    updateDraftingState();
     taskNameInput.focus();
 }
 

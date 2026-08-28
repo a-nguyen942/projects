@@ -67,6 +67,14 @@ body {
     padding: 0 40px;
 }
 
+.center-task-saved {
+    margin: 0 40px;
+}
+
+.center-task.is-drafting .center-task-saved {
+    border-top: 1px solid #a09e9e;
+}
+
 .task-card {
     position: relative;
     display: grid;
