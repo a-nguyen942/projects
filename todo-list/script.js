@@ -4,11 +4,36 @@ const welcomeText = document.createElement("h1");
 const header = document.querySelector(".header");
 const addTaskButton = document.querySelector(".add-task-button");
 const centerTask = document.querySelector(".center-task");
+const centerSectionDisplay = document.querySelector("#center-section-display");
 const taskContent = document.querySelector(".center-task-content");
-const savedTaskContent = document.querySelector(".center-task-saved");
+const savedTaskContent = document.querySelector(".saved-task-list");
+let draftingAnimationId = null;
+let draftingDotCount = 1;
 
 welcomeText.textContent = `Welcome, ${USER}`;
 header.appendChild(welcomeText);
+
+function enterDraftingState() {
+    if (draftingAnimationId !== null) {
+        return;
+    }
+
+    centerSectionDisplay.textContent = "Drafting.";
+    draftingAnimationId = setInterval(() => {
+        draftingDotCount = draftingDotCount === 3 ? 1 : draftingDotCount + 1;
+        centerSectionDisplay.textContent = `Drafting${".".repeat(draftingDotCount)}`;
+    }, 500);
+}
+
+function returnToOverviewState() {
+    if (draftingAnimationId !== null) {
+        clearInterval(draftingAnimationId);
+        draftingAnimationId = null;
+    }
+
+    draftingDotCount = 1;
+    centerSectionDisplay.textContent = "Overview";
+}
 
 function updateTaskState() {
     const hasDrafts = taskContent.querySelector(".task-card") !== null;
@@ -16,6 +41,12 @@ function updateTaskState() {
 
     centerTask.classList.toggle("is-drafting", hasDrafts);
     centerTask.classList.toggle("has-saved-tasks", hasSavedTasks);
+
+    if (hasDrafts) {
+        enterDraftingState();
+    } else {
+        returnToOverviewState();
+    }
 }
 
 function createTask() {

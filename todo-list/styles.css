@@ -55,8 +55,9 @@ body {
     min-height: 3rem;
 }
 
-#center-section-display{
-    font-weight:700;
+#center-section-display,
+.saved-tasks-heading {
+    font-weight: 700;
     font-size:24px;
 }
 
@@ -93,6 +94,30 @@ body {
 
 .center-task.is-drafting .center-task-saved {
     border-top: 1px solid #a09e9e;
+}
+
+.saved-tasks-heading,
+.empty-saved-task-message {
+    display: none;
+}
+
+.saved-tasks-heading {
+    margin: 1.5rem 0 0;
+}
+
+.empty-saved-task-message {
+    margin: 2rem 0;
+    color: #9a9a9a;
+    font-size: 24px;
+    text-align: center;
+}
+
+.center-task.is-drafting .saved-tasks-heading {
+    display: block;
+}
+
+.center-task.is-drafting:not(.has-saved-tasks) .empty-saved-task-message {
+    display: block;
 }
 
 .task-card {
@@ -191,6 +216,10 @@ body {
     color: #242424;
     font: inherit;
     cursor: pointer;
+}
+
+.center-task.is-drafting .add-task-button {
+    display: none;
 }
 
 .add-task-icon {
