@@ -10,10 +10,12 @@ const savedTaskContent = document.querySelector(".center-task-saved");
 welcomeText.textContent = `Welcome, ${USER}`;
 header.appendChild(welcomeText);
 
-function updateDraftingState() {
+function updateTaskState() {
     const hasDrafts = taskContent.querySelector(".task-card") !== null;
+    const hasSavedTasks = savedTaskContent.querySelector(".task-card") !== null;
 
     centerTask.classList.toggle("is-drafting", hasDrafts);
+    centerTask.classList.toggle("has-saved-tasks", hasSavedTasks);
 }
 
 function createTask() {
@@ -34,7 +36,7 @@ function createTask() {
     deleteButton.setAttribute("aria-label", "Delete task");
     deleteButton.addEventListener("click", () => {
         taskCard.remove();
-        updateDraftingState();
+        updateTaskState();
     });
 
     taskNameInput.className = "task-name-input";
@@ -61,13 +63,13 @@ function createTask() {
     saveButton.textContent = "➤ Save";
     saveButton.addEventListener("click", () => {
         savedTaskContent.appendChild(taskCard);
-        updateDraftingState();
+        updateTaskState();
     });
 
     taskCardFooter.append(priorityButton, reminderButton, saveButton);
     taskCard.append(deleteButton, taskNameInput, taskDescriptionInput, taskCardFooter);
     taskContent.appendChild(taskCard);
-    updateDraftingState();
+    updateTaskState();
     taskNameInput.focus();
 }
 

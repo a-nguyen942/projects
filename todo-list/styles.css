@@ -39,6 +39,9 @@ body {
 }
 
 .center-task {
+    position: relative;
+    display: flex;
+    flex-direction: column;
     flex: 5;
 }
 
@@ -65,6 +68,23 @@ body {
 
 .center-task-content {
     padding: 0 40px;
+}
+
+.empty-task-message {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    color: #9a9a9a;
+    font-size: 24px;
+    text-align: center;
+    transform: translateY(-50%);
+}
+
+.center-task:not(.is-drafting):not(.has-saved-tasks) .empty-task-message {
+    display: block;
 }
 
 .center-task-saved {
