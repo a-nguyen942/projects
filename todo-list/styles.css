@@ -63,6 +63,70 @@ body {
     padding:8px 40px 40px 40px;
 }
 
+.center-task-content {
+    padding: 0 40px;
+}
+
+.task-card {
+    position: relative;
+    display: grid;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    border: 1px solid #e7e7e7;
+    border-radius: 0.5rem;
+    margin:1rem 0 1rem 0;
+}
+
+.task-name-input,
+.task-description-input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0.35rem 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #242424;
+    font: inherit;
+}
+
+.task-name-input {
+    padding-right: 2rem;
+    font-weight: 600;
+    font-size: 1.15rem;
+}
+
+.task-description-input {
+    min-height: 4rem;
+    resize: none;
+}
+
+.task-name-input::placeholder,
+.task-description-input::placeholder {
+    color: #9a9a9a;
+    opacity: 1;
+}
+
+.task-delete-button {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 1.75rem;
+    height: 1.75rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #737373;
+    font: inherit;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.task-delete-button:hover,
+.task-delete-button:focus-visible {
+    color: #242424;
+}
+
 .add-task-button {
     display: inline-flex;
     align-items: center;
