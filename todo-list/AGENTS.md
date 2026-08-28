@@ -2,7 +2,7 @@
 
 ## Project direction
 
-- Build a downloadable desktop application, not a hosted website.
+- Build a downloadable desktop application, not a hosted website (down the line possibly)
 - Prefer Electron with vanilla HTML, CSS, and JavaScript.
 - Keep the app offline-first and store user data locally by default.
 - Keep the interface calm, simple, and student-friendly.

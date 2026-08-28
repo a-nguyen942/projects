@@ -45,14 +45,22 @@ body {
 .header{
     display:flex;
     justify-content: center;
+    padding-bottom:16px;
 }
 
 .footer {
     min-height: 3rem;
 }
 
-.add-task{
-    padding:40px 40px 0 40px;
+#center-section-display{
+    font-weight:700;
+    font-size:24px;
+}
+
+.center-task-topbar{
+    display:flex;
+    justify-content: space-between;
+    padding:8px 40px 40px 40px;
 }
 
 .add-task-button {
