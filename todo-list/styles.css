@@ -64,7 +64,69 @@ body {
 .center-task-topbar{
     display:flex;
     justify-content: space-between;
+    align-items: flex-start;
     padding:8px 40px 40px 40px;
+}
+
+.topbar-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+}
+
+.overview-sort-control {
+    position: relative;
+}
+
+.sort-button,
+.sort-option {
+    border: 0;
+    background: transparent;
+    color: #737373;
+    font: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.sort-button {
+    padding: 0;
+}
+
+.sort-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 0.4rem);
+    right: 0;
+    z-index: 1;
+    min-width: 10rem;
+    gap: 0.15rem;
+    padding: 0.25rem;
+    border: 1px solid #e7e7e7;
+    border-radius: 0.3rem;
+    background: #ffffff;
+}
+
+.sort-menu.is-open {
+    display: grid;
+}
+
+.sort-option {
+    padding: 0.45rem 0.5rem;
+    border-radius: 0.2rem;
+    text-align: left;
+}
+
+.sort-button:hover,
+.sort-button:focus-visible,
+.sort-option:hover,
+.sort-option:focus-visible {
+    color: #242424;
+}
+
+.sort-option:hover,
+.sort-option:focus-visible {
+    background: #f1f1f1;
 }
 
 .center-task-content {
@@ -261,6 +323,10 @@ body {
 }
 
 .center-task.is-drafting .add-task-button {
+    display: none;
+}
+
+.center-task.is-drafting .overview-sort-control {
     display: none;
 }
 

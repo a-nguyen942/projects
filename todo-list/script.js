@@ -3,12 +3,16 @@ let USER = "Tony";
 const welcomeText = document.createElement("h1");
 const header = document.querySelector(".header");
 const addTaskButton = document.querySelector(".add-task-button");
+const sortButton = document.querySelector(".sort-button");
+const sortMenu = document.querySelector(".sort-menu");
+const sortOptions = document.querySelectorAll(".sort-option");
 const centerTask = document.querySelector(".center-task");
 const centerSectionDisplay = document.querySelector("#center-section-display");
 const taskContent = document.querySelector(".center-task-content");
 const savedTaskContent = document.querySelector(".saved-task-list");
 let draftingAnimationId = null;
 let draftingDotCount = 1;
+let activeSort = "recent";
 
 welcomeText.textContent = `Welcome, ${USER}`;
 header.appendChild(welcomeText);
@@ -56,12 +60,52 @@ function validateTaskInput(input, message) {
     return hasText;
 }
 
+function comparePriorities(firstCard, secondCard, lowToHigh) {
+    const firstPriority = firstCard.taskData.priority;
+    const secondPriority = secondCard.taskData.priority;
+
+    if (firstPriority === null && secondPriority === null) {
+        return 0;
+    }
+
+    if (firstPriority === null) {
+        return 1;
+    }
+
+    if (secondPriority === null) {
+        return -1;
+    }
+
+    return lowToHigh
+        ? secondPriority - firstPriority
+        : firstPriority - secondPriority;
+}
+
+function sortSavedTasks(sortType) {
+    const savedTaskCards = Array.from(savedTaskContent.querySelectorAll(".task-card"));
+
+    savedTaskCards.sort((firstCard, secondCard) => {
+        if (sortType === "recent") {
+            return secondCard.taskData.savedAt - firstCard.taskData.savedAt;
+        }
+
+        return comparePriorities(
+            firstCard,
+            secondCard,
+            sortType === "priority-low-high"
+        );
+    });
+
+    savedTaskContent.append(...savedTaskCards);
+}
+
 function createTask() {
     const taskCard = document.createElement("article");
     const task = {
         title: "",
         description: "",
-        priority: null
+        priority: null,
+        savedAt: null
     };
     const deleteButton = document.createElement("button");
     const taskNameInput = document.createElement("input");
@@ -134,6 +178,10 @@ function createTask() {
             priorityButton.textContent = `⚑ Priority ${priority}`;
             priorityMenu.classList.remove("is-open");
             priorityButton.setAttribute("aria-expanded", "false");
+
+            if (taskCard.classList.contains("is-saved")) {
+                sortSavedTasks(activeSort);
+            }
         });
 
         priorityMenu.appendChild(priorityOption);
@@ -171,9 +219,11 @@ function createTask() {
         }
 
         taskCard.classList.add("is-saved");
+        task.savedAt = Date.now();
         deleteButton.remove();
         saveButton.replaceWith(completedButton);
         savedTaskContent.appendChild(taskCard);
+        sortSavedTasks(activeSort);
         updateTaskState();
     });
 
@@ -185,3 +235,20 @@ function createTask() {
 }
 
 addTaskButton.addEventListener("click", createTask);
+
+sortButton.addEventListener("click", () => {
+    const menuIsOpen = sortMenu.classList.toggle("is-open");
+
+    sortButton.setAttribute("aria-expanded", menuIsOpen);
+});
+
+sortOptions.forEach((sortOption) => {
+    sortOption.addEventListener("click", () => {
+        activeSort = sortOption.dataset.sort;
+        sortSavedTasks(activeSort);
+        sortButton.textContent = `↕ ${sortOption.textContent.trim()}`;
+        sortButton.setAttribute("aria-label", `Sort saved tasks: ${sortOption.textContent.trim()}`);
+        sortMenu.classList.remove("is-open");
+        sortButton.setAttribute("aria-expanded", "false");
+    });
+});
