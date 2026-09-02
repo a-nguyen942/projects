@@ -286,3 +286,27 @@ body {
     padding-right: 1rem;
     border-right: 1px solid #a09e9e;
 }
+
+.task-card[data-priority="1"] .task-priority-button,
+.priority-option-1 {
+    color: #b85c5c;
+    border-color: #b85c5c;
+}
+
+.task-card[data-priority="2"] .task-priority-button,
+.priority-option-2 {
+    color: #b8784a;
+    border-color: #b8784a;
+}
+
+.task-card[data-priority="3"] .task-priority-button,
+.priority-option-3 {
+    color: #a58a3b;
+    border-color: #a58a3b;
+}
+
+.task-card[data-priority="4"] .task-priority-button,
+.priority-option-4 {
+    color: #5f8a68;
+    border-color: #5f8a68;
+}

@@ -124,7 +124,7 @@ function createTask() {
     for (let priority = 1; priority <= 4; priority += 1) {
         const priorityOption = document.createElement("button");
 
-        priorityOption.className = "priority-option";
+        priorityOption.className = `priority-option priority-option-${priority}`;
         priorityOption.type = "button";
         priorityOption.textContent = priority;
         priorityOption.setAttribute("aria-label", `Set priority to ${priority}`);
