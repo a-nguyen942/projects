@@ -68,6 +68,11 @@ function validateTaskInput(input, message) {
     return hasText;
 }
 
+function resizeTaskTextArea(textArea) {
+    textArea.style.height = "auto";
+    textArea.style.height = `${textArea.scrollHeight}px`;
+}
+
 function comparePriorities(firstCard, secondCard, lowToHigh) {
     const firstPriority = firstCard.taskData.priority;
     const secondPriority = secondCard.taskData.priority;
@@ -164,7 +169,7 @@ function createTask() {
         savedAt: null
     };
     const deleteButton = document.createElement("button");
-    const taskNameInput = document.createElement("input");
+    const taskNameInput = document.createElement("textarea");
     const taskDescriptionInput = document.createElement("textarea");
     const taskCardFooter = document.createElement("footer");
     const priorityControl = document.createElement("div");
@@ -187,20 +192,25 @@ function createTask() {
     });
 
     taskNameInput.className = "task-name-input";
-    taskNameInput.type = "text";
+    taskNameInput.rows = 1;
+    taskNameInput.wrap = "soft";
     taskNameInput.placeholder = "Task name";
     taskNameInput.required = true;
     taskNameInput.setAttribute("aria-label", "Task name");
     taskNameInput.addEventListener("input", () => {
         task.title = taskNameInput.value;
+        resizeTaskTextArea(taskNameInput);
     });
 
     taskDescriptionInput.className = "task-description-input";
+    taskDescriptionInput.rows = 3;
+    taskDescriptionInput.wrap = "soft";
     taskDescriptionInput.placeholder = "Task description";
     taskDescriptionInput.required = true;
     taskDescriptionInput.setAttribute("aria-label", "Task description");
     taskDescriptionInput.addEventListener("input", () => {
         task.description = taskDescriptionInput.value;
+        resizeTaskTextArea(taskDescriptionInput);
     });
 
     taskCardFooter.className = "task-card-footer";

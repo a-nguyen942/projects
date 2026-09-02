@@ -250,6 +250,9 @@ body {
     background: transparent;
     color: #242424;
     font: inherit;
+    resize: none;
+    overflow: hidden;
+    overflow-wrap: anywhere;
 }
 
 .task-name-input {
@@ -260,7 +263,6 @@ body {
 
 .task-description-input {
     min-height: 4rem;
-    resize: none;
 }
 
 .task-name-input::placeholder,
