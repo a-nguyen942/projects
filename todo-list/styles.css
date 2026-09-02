@@ -320,6 +320,32 @@ textarea,
     display: none;
 }
 
+@keyframes task-complete-bounce {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-0.3rem);
+    }
+
+    70% {
+        transform: translateY(-0.1rem);
+    }
+}
+
+.task-card.is-completing {
+    pointer-events: none;
+    animation: task-complete-bounce 360ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .task-card.is-completing {
+        animation-duration: 1ms;
+    }
+}
+
 .task-name-input,
 .task-description-input {
     box-sizing: border-box;

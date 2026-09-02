@@ -319,8 +319,15 @@ function createTask() {
     completedButton.type = "button";
     completedButton.textContent = "✓ Completed";
     completedButton.addEventListener("click", () => {
-        taskCard.remove();
-        updateTaskState();
+        if (taskCard.classList.contains("is-completing")) {
+            return;
+        }
+
+        taskCard.classList.add("is-completing");
+        taskCard.addEventListener("animationend", () => {
+            taskCard.remove();
+            updateTaskState();
+        }, { once: true });
     });
 
     saveButton.className = "task-footer-button task-save-button";
