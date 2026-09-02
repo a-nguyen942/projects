@@ -51,6 +51,8 @@ body.dark-mode {
     --priority-4-color: #82aa8a;
 }
 
+/* App shell */
+
 body {
     display: flex;
     flex-direction: column;
@@ -98,6 +100,8 @@ textarea,
     padding-bottom: 16px;
 }
 
+/* Theme toggle */
+
 .theme-toggle {
     position: absolute;
     top: 1rem;
@@ -135,10 +139,12 @@ textarea,
     min-height: 3rem;
 }
 
+/* Task workspace */
+
 #center-section-display,
 .saved-tasks-heading {
     font-weight: 700;
-    font-size:24px;
+    font-size: 24px;
 }
 
 .center-task-layout {
@@ -158,6 +164,38 @@ textarea,
     flex-direction: column;
     align-items: flex-end;
     gap: 0.35rem;
+}
+
+/* Overview actions and menus */
+
+.add-task-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--text-color);
+    font: inherit;
+    cursor: pointer;
+}
+
+.add-task-icon {
+    display: inline-grid;
+    width: 1.5rem;
+    height: 1.5rem;
+    place-items: center;
+    border: 1px solid var(--muted-text-color);
+    border-radius: 50%;
+    color: var(--muted-text-color);
+    font-size: 1.25rem;
+    line-height: 1;
+}
+
+.add-task-button:hover .add-task-icon,
+.add-task-button:focus-visible .add-task-icon {
+    border-color: var(--text-color);
+    color: var(--text-color);
 }
 
 .overview-sort-control,
@@ -278,10 +316,6 @@ textarea,
     margin: 0;
 }
 
-.center-task.is-drafting .center-task-saved {
-    border-top: 1px solid var(--strong-border-color);
-}
-
 .saved-tasks-heading,
 .empty-saved-task-message {
     display: none;
@@ -306,6 +340,24 @@ textarea,
     display: block;
 }
 
+/* Task view states */
+
+.center-task.is-drafting .add-task-button,
+.center-task.is-drafting .overview-sort-control,
+.center-task.is-drafting .overview-filter-control {
+    display: none;
+}
+
+.center-task.is-drafting .center-task-layout {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.center-task.is-drafting .center-task-saved {
+    border-top: 1px solid var(--strong-border-color);
+}
+
+/* Task cards */
+
 .task-card {
     position: relative;
     display: grid;
@@ -313,7 +365,7 @@ textarea,
     padding: 1.5rem;
     border: 1px solid var(--border-color);
     border-radius: 0.5rem;
-    margin:1rem 0 1rem 0;
+    margin: 1rem 0;
 }
 
 .task-card.is-filtered-out {
@@ -466,48 +518,7 @@ textarea,
     color: var(--text-color);
 }
 
-.add-task-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0;
-    border: 0;
-    background: transparent;
-    color: var(--text-color);
-    font: inherit;
-    cursor: pointer;
-}
-
-.center-task.is-drafting .add-task-button {
-    display: none;
-}
-
-.center-task.is-drafting .overview-sort-control,
-.center-task.is-drafting .overview-filter-control {
-    display: none;
-}
-
-.center-task.is-drafting .center-task-layout {
-    grid-template-columns: minmax(0, 1fr);
-}
-
-.add-task-icon {
-    display: inline-grid;
-    width: 1.5rem;
-    height: 1.5rem;
-    place-items: center;
-    border: 1px solid var(--muted-text-color);
-    border-radius: 50%;
-    color: var(--muted-text-color);
-    font-size: 1.25rem;
-    line-height: 1;
-}
-
-.add-task-button:hover .add-task-icon,
-.add-task-button:focus-visible .add-task-icon {
-    border-color: var(--text-color);
-    color: var(--text-color);
-}
+/* Priority controls */
 
 .task-priority-button {
     padding-right: 1rem;
