@@ -22,3 +22,7 @@
 - Manually check that the app starts and the changed flow works.
 - Keep user task data backward-compatible, or provide a migration when changing its format.
 - Double check to see if it's doing what the user asked.
+
+## After a change
+
+- Always include a detailed report of ALL changes made, including any ghost changes or features that were added without being directly told to implement
