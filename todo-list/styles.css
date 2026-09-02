@@ -80,17 +80,17 @@ textarea,
     flex: 1;
 }
 
-.sidebar {
-    flex: 1;
-    border-left: 1px solid var(--strong-border-color);
-    border-left-width: 3px;
-}
-
 .center-task {
     position: relative;
     display: flex;
     flex-direction: column;
     flex: 5;
+}
+
+.sidebar {
+    flex: 1;
+    border-left: 1px solid var(--strong-border-color);
+    border-left-width: 3px;
 }
 
 .header {
