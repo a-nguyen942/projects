@@ -75,12 +75,14 @@ body {
     gap: 0.5rem;
 }
 
-.overview-sort-control {
+.overview-sort-control,
+.overview-filter-control {
     position: relative;
 }
 
 .sort-button,
-.sort-option {
+.sort-option,
+.filter-button {
     border: 0;
     background: transparent;
     color: #737373;
@@ -89,11 +91,13 @@ body {
     cursor: pointer;
 }
 
-.sort-button {
+.sort-button,
+.filter-button {
     padding: 0;
 }
 
-.sort-menu {
+.sort-menu,
+.filter-menu {
     display: none;
     position: absolute;
     top: calc(100% + 0.4rem);
@@ -107,7 +111,8 @@ body {
     background: #ffffff;
 }
 
-.sort-menu.is-open {
+.sort-menu.is-open,
+.filter-menu.is-open {
     display: grid;
 }
 
@@ -120,13 +125,32 @@ body {
 .sort-button:hover,
 .sort-button:focus-visible,
 .sort-option:hover,
-.sort-option:focus-visible {
+.sort-option:focus-visible,
+.filter-button:hover,
+.filter-button:focus-visible,
+.filter-option:hover {
     color: #242424;
 }
 
 .sort-option:hover,
 .sort-option:focus-visible {
     background: #f1f1f1;
+}
+
+.filter-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.5rem;
+    border-radius: 0.2rem;
+    color: #737373;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.filter-option input {
+    margin: 0;
+    accent-color: #737373;
 }
 
 .center-task-content {
@@ -190,6 +214,10 @@ body {
     border: 1px solid #e7e7e7;
     border-radius: 0.5rem;
     margin:1rem 0 1rem 0;
+}
+
+.task-card.is-filtered-out {
+    display: none;
 }
 
 .task-name-input,
@@ -326,7 +354,8 @@ body {
     display: none;
 }
 
-.center-task.is-drafting .overview-sort-control {
+.center-task.is-drafting .overview-sort-control,
+.center-task.is-drafting .overview-filter-control {
     display: none;
 }
 
@@ -354,25 +383,45 @@ body {
 }
 
 .task-card[data-priority="1"] .task-priority-button,
-.priority-option-1 {
+.priority-option-1,
+.filter-option-1 {
     color: #b85c5c;
     border-color: #b85c5c;
 }
 
 .task-card[data-priority="2"] .task-priority-button,
-.priority-option-2 {
+.priority-option-2,
+.filter-option-2 {
     color: #b8784a;
     border-color: #b8784a;
 }
 
 .task-card[data-priority="3"] .task-priority-button,
-.priority-option-3 {
+.priority-option-3,
+.filter-option-3 {
     color: #a58a3b;
     border-color: #a58a3b;
 }
 
 .task-card[data-priority="4"] .task-priority-button,
-.priority-option-4 {
+.priority-option-4,
+.filter-option-4 {
     color: #5f8a68;
     border-color: #5f8a68;
+}
+
+.filter-option-1 input {
+    accent-color: #b85c5c;
+}
+
+.filter-option-2 input {
+    accent-color: #b8784a;
+}
+
+.filter-option-3 input {
+    accent-color: #a58a3b;
+}
+
+.filter-option-4 input {
+    accent-color: #5f8a68;
 }

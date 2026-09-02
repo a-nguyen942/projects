@@ -6,6 +6,9 @@ const addTaskButton = document.querySelector(".add-task-button");
 const sortButton = document.querySelector(".sort-button");
 const sortMenu = document.querySelector(".sort-menu");
 const sortOptions = document.querySelectorAll(".sort-option");
+const filterButton = document.querySelector(".filter-button");
+const filterMenu = document.querySelector(".filter-menu");
+const filterOptions = document.querySelectorAll(".filter-option input");
 const centerTask = document.querySelector(".center-task");
 const centerSectionDisplay = document.querySelector("#center-section-display");
 const taskContent = document.querySelector(".center-task-content");
@@ -13,6 +16,11 @@ const savedTaskContent = document.querySelector(".saved-task-list");
 let draftingAnimationId = null;
 let draftingDotCount = 1;
 let activeSort = "recent";
+const visiblePriorities = new Set(
+    Array.from(filterOptions)
+        .filter((filterOption) => filterOption.checked)
+        .map((filterOption) => filterOption.value)
+);
 
 welcomeText.textContent = `Welcome, ${USER}`;
 header.appendChild(welcomeText);
@@ -99,6 +107,17 @@ function sortSavedTasks(sortType) {
     savedTaskContent.append(...savedTaskCards);
 }
 
+function applyPriorityFilters() {
+    const savedTaskCards = savedTaskContent.querySelectorAll(".task-card");
+
+    savedTaskCards.forEach((taskCard) => {
+        const priority = taskCard.dataset.priority;
+        const shouldShow = priority === undefined || visiblePriorities.has(priority);
+
+        taskCard.classList.toggle("is-filtered-out", !shouldShow);
+    });
+}
+
 function createTask() {
     const taskCard = document.createElement("article");
     const task = {
@@ -181,6 +200,7 @@ function createTask() {
 
             if (taskCard.classList.contains("is-saved")) {
                 sortSavedTasks(activeSort);
+                applyPriorityFilters();
             }
         });
 
@@ -224,6 +244,7 @@ function createTask() {
         saveButton.replaceWith(completedButton);
         savedTaskContent.appendChild(taskCard);
         sortSavedTasks(activeSort);
+        applyPriorityFilters();
         updateTaskState();
     });
 
@@ -240,6 +261,8 @@ sortButton.addEventListener("click", () => {
     const menuIsOpen = sortMenu.classList.toggle("is-open");
 
     sortButton.setAttribute("aria-expanded", menuIsOpen);
+    filterMenu.classList.remove("is-open");
+    filterButton.setAttribute("aria-expanded", "false");
 });
 
 sortOptions.forEach((sortOption) => {
@@ -250,5 +273,25 @@ sortOptions.forEach((sortOption) => {
         sortButton.setAttribute("aria-label", `Sort saved tasks: ${sortOption.textContent.trim()}`);
         sortMenu.classList.remove("is-open");
         sortButton.setAttribute("aria-expanded", "false");
+    });
+});
+
+filterButton.addEventListener("click", () => {
+    const menuIsOpen = filterMenu.classList.toggle("is-open");
+
+    filterButton.setAttribute("aria-expanded", menuIsOpen);
+    sortMenu.classList.remove("is-open");
+    sortButton.setAttribute("aria-expanded", "false");
+});
+
+filterOptions.forEach((filterOption) => {
+    filterOption.addEventListener("change", () => {
+        if (filterOption.checked) {
+            visiblePriorities.add(filterOption.value);
+        } else {
+            visiblePriorities.delete(filterOption.value);
+        }
+
+        applyPriorityFilters();
     });
 });
