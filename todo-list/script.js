@@ -49,6 +49,13 @@ function updateTaskState() {
     }
 }
 
+function validateTaskInput(input, message) {
+    const hasText = input.value.trim().length > 0;
+
+    input.setCustomValidity(hasText ? "" : message);
+    return hasText;
+}
+
 function createTask() {
     const taskCard = document.createElement("article");
     const deleteButton = document.createElement("button");
@@ -58,6 +65,7 @@ function createTask() {
     const priorityButton = document.createElement("button");
     const reminderButton = document.createElement("button");
     const saveButton = document.createElement("button");
+    const completedButton = document.createElement("button");
 
     taskCard.className = "task-card";
 
@@ -73,10 +81,12 @@ function createTask() {
     taskNameInput.className = "task-name-input";
     taskNameInput.type = "text";
     taskNameInput.placeholder = "Task name";
+    taskNameInput.required = true;
     taskNameInput.setAttribute("aria-label", "Task name");
 
     taskDescriptionInput.className = "task-description-input";
     taskDescriptionInput.placeholder = "Task description";
+    taskDescriptionInput.required = true;
     taskDescriptionInput.setAttribute("aria-label", "Task description");
 
     taskCardFooter.className = "task-card-footer";
@@ -89,10 +99,34 @@ function createTask() {
     reminderButton.type = "button";
     reminderButton.textContent = "◷ Reminder";
 
+    completedButton.className = "task-footer-button task-completed-button";
+    completedButton.type = "button";
+    completedButton.textContent = "✓ Completed";
+    completedButton.addEventListener("click", () => {
+        taskCard.remove();
+        updateTaskState();
+    });
+
     saveButton.className = "task-footer-button task-save-button";
     saveButton.type = "button";
     saveButton.textContent = "➤ Save";
     saveButton.addEventListener("click", () => {
+        const hasTaskName = validateTaskInput(taskNameInput, "Enter a task name before saving.");
+        const hasTaskDescription = validateTaskInput(
+            taskDescriptionInput,
+            "Enter a task description before saving."
+        );
+
+        if (!hasTaskName || !hasTaskDescription) {
+            const invalidInput = hasTaskName ? taskDescriptionInput : taskNameInput;
+
+            invalidInput.reportValidity();
+            return;
+        }
+
+        taskCard.classList.add("is-saved");
+        deleteButton.remove();
+        saveButton.replaceWith(completedButton);
         savedTaskContent.appendChild(taskCard);
         updateTaskState();
     });

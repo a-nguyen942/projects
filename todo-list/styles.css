@@ -181,7 +181,8 @@ body {
     color: #242424;
 }
 
-.task-save-button {
+.task-save-button,
+.task-completed-button {
     margin-left: auto;
 }
 
