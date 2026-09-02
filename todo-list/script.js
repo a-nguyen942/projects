@@ -58,16 +58,24 @@ function validateTaskInput(input, message) {
 
 function createTask() {
     const taskCard = document.createElement("article");
+    const task = {
+        title: "",
+        description: "",
+        priority: null
+    };
     const deleteButton = document.createElement("button");
     const taskNameInput = document.createElement("input");
     const taskDescriptionInput = document.createElement("textarea");
     const taskCardFooter = document.createElement("footer");
+    const priorityControl = document.createElement("div");
     const priorityButton = document.createElement("button");
+    const priorityMenu = document.createElement("div");
     const reminderButton = document.createElement("button");
     const saveButton = document.createElement("button");
     const completedButton = document.createElement("button");
 
     taskCard.className = "task-card";
+    taskCard.taskData = task;
 
     deleteButton.className = "task-delete-button";
     deleteButton.type = "button";
@@ -83,17 +91,55 @@ function createTask() {
     taskNameInput.placeholder = "Task name";
     taskNameInput.required = true;
     taskNameInput.setAttribute("aria-label", "Task name");
+    taskNameInput.addEventListener("input", () => {
+        task.title = taskNameInput.value;
+    });
 
     taskDescriptionInput.className = "task-description-input";
     taskDescriptionInput.placeholder = "Task description";
     taskDescriptionInput.required = true;
     taskDescriptionInput.setAttribute("aria-label", "Task description");
+    taskDescriptionInput.addEventListener("input", () => {
+        task.description = taskDescriptionInput.value;
+    });
 
     taskCardFooter.className = "task-card-footer";
+
+    priorityControl.className = "priority-control";
 
     priorityButton.className = "task-footer-button task-priority-button";
     priorityButton.type = "button";
     priorityButton.textContent = "⚑ Priority";
+    priorityButton.setAttribute("aria-expanded", "false");
+    priorityButton.setAttribute("aria-haspopup", "true");
+    priorityButton.addEventListener("click", () => {
+        const menuIsOpen = priorityMenu.classList.toggle("is-open");
+
+        priorityButton.setAttribute("aria-expanded", menuIsOpen);
+    });
+
+    priorityMenu.className = "priority-menu";
+    priorityMenu.setAttribute("aria-label", "Choose task priority");
+
+    for (let priority = 1; priority <= 4; priority += 1) {
+        const priorityOption = document.createElement("button");
+
+        priorityOption.className = "priority-option";
+        priorityOption.type = "button";
+        priorityOption.textContent = priority;
+        priorityOption.setAttribute("aria-label", `Set priority to ${priority}`);
+        priorityOption.addEventListener("click", () => {
+            task.priority = priority;
+            taskCard.dataset.priority = priority;
+            priorityButton.textContent = `⚑ Priority ${priority}`;
+            priorityMenu.classList.remove("is-open");
+            priorityButton.setAttribute("aria-expanded", "false");
+        });
+
+        priorityMenu.appendChild(priorityOption);
+    }
+
+    priorityControl.append(priorityButton, priorityMenu);
 
     reminderButton.className = "task-footer-button task-reminder-button";
     reminderButton.type = "button";
@@ -131,7 +177,7 @@ function createTask() {
         updateTaskState();
     });
 
-    taskCardFooter.append(priorityButton, reminderButton, saveButton);
+    taskCardFooter.append(priorityControl, reminderButton, saveButton);
     taskCard.append(deleteButton, taskNameInput, taskDescriptionInput, taskCardFooter);
     taskContent.appendChild(taskCard);
     updateTaskState();
