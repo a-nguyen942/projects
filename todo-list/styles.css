@@ -19,12 +19,58 @@
     font-style: italic;
 }
 
+:root {
+    color-scheme: light;
+    --app-background: #ffffff;
+    --text-color: #242424;
+    --muted-text-color: #737373;
+    --subtle-text-color: #9a9a9a;
+    --border-color: #e7e7e7;
+    --strong-border-color: #a09e9e;
+    --surface-color: #ffffff;
+    --hover-surface-color: #f1f1f1;
+    --priority-1-color: #b85c5c;
+    --priority-2-color: #b8784a;
+    --priority-3-color: #a58a3b;
+    --priority-4-color: #5f8a68;
+}
+
+body.dark-mode {
+    color-scheme: dark;
+    --app-background: #1e1d1b;
+    --text-color: #f1efec;
+    --muted-text-color: #bbb6b0;
+    --subtle-text-color: #948f89;
+    --border-color: #46423e;
+    --strong-border-color: #67625c;
+    --surface-color: #282623;
+    --hover-surface-color: #34312e;
+    --priority-1-color: #d68b8b;
+    --priority-2-color: #d49b72;
+    --priority-3-color: #d1b968;
+    --priority-4-color: #82aa8a;
+}
+
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     margin: 0;
+    background: var(--app-background);
+    color: var(--text-color);
     font-family: "Friend", sans-serif;
+}
+
+body,
+button,
+textarea,
+.sidebar,
+.center-task-saved,
+.task-card,
+.sort-menu,
+.filter-menu,
+.priority-menu {
+    transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
 }
 
 .center-section {
@@ -34,7 +80,7 @@ body {
 
 .sidebar {
     flex: 1;
-    border-left: 1px solid #a09e9e;
+    border-left: 1px solid var(--strong-border-color);
     border-left-width: 3px;
 }
 
@@ -45,10 +91,44 @@ body {
     flex: 5;
 }
 
-.header{
-    display:flex;
+.header {
+    position: relative;
+    display: flex;
     justify-content: center;
-    padding-bottom:16px;
+    padding-bottom: 16px;
+}
+
+.theme-toggle {
+    position: absolute;
+    top: 1rem;
+    left: 1.5rem;
+    display: inline-grid;
+    width: 2.25rem;
+    height: 2.25rem;
+    place-items: center;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--muted-text-color);
+    cursor: pointer;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+    border-color: var(--border-color);
+    background: var(--hover-surface-color);
+    color: var(--text-color);
+}
+
+.theme-toggle-icon {
+    width: 1.15rem;
+    height: 1.15rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
 }
 
 .footer {
@@ -90,7 +170,7 @@ body {
 .filter-button {
     border: 0;
     background: transparent;
-    color: #737373;
+    color: var(--muted-text-color);
     font: inherit;
     font-size: 0.9rem;
     cursor: pointer;
@@ -126,9 +206,9 @@ body {
     min-width: 10rem;
     gap: 0.15rem;
     padding: 0.25rem;
-    border: 1px solid #e7e7e7;
+    border: 1px solid var(--border-color);
     border-radius: 0.3rem;
-    background: #ffffff;
+    background: var(--surface-color);
 }
 
 .sort-menu.is-open,
@@ -149,12 +229,12 @@ body {
 .filter-button:hover,
 .filter-button:focus-visible,
 .filter-option:hover {
-    color: #242424;
+    color: var(--text-color);
 }
 
 .sort-option:hover,
 .sort-option:focus-visible {
-    background: #f1f1f1;
+    background: var(--hover-surface-color);
 }
 
 .filter-option {
@@ -163,14 +243,14 @@ body {
     gap: 0.5rem;
     padding: 0.45rem 0.5rem;
     border-radius: 0.2rem;
-    color: #737373;
+    color: var(--muted-text-color);
     font-size: 0.9rem;
     cursor: pointer;
 }
 
 .filter-option input {
     margin: 0;
-    accent-color: #737373;
+    accent-color: var(--muted-text-color);
 }
 
 .center-task-content {
@@ -184,7 +264,7 @@ body {
     left: 0;
     width: 100%;
     margin: 0;
-    color: #9a9a9a;
+    color: var(--subtle-text-color);
     font-size: 24px;
     text-align: center;
     transform: translateY(-50%);
@@ -199,7 +279,7 @@ body {
 }
 
 .center-task.is-drafting .center-task-saved {
-    border-top: 1px solid #a09e9e;
+    border-top: 1px solid var(--strong-border-color);
 }
 
 .saved-tasks-heading,
@@ -213,7 +293,7 @@ body {
 
 .empty-saved-task-message {
     margin: 2rem 0;
-    color: #9a9a9a;
+    color: var(--subtle-text-color);
     font-size: 24px;
     text-align: center;
 }
@@ -231,7 +311,7 @@ body {
     display: grid;
     gap: 0.5rem;
     padding: 1.5rem;
-    border: 1px solid #e7e7e7;
+    border: 1px solid var(--border-color);
     border-radius: 0.5rem;
     margin:1rem 0 1rem 0;
 }
@@ -248,7 +328,7 @@ body {
     border: 0;
     outline: 0;
     background: transparent;
-    color: #242424;
+    color: var(--text-color);
     font: inherit;
     resize: none;
     overflow: hidden;
@@ -267,7 +347,7 @@ body {
 
 .task-name-input::placeholder,
 .task-description-input::placeholder {
-    color: #9a9a9a;
+    color: var(--subtle-text-color);
     opacity: 1;
 }
 
@@ -282,7 +362,7 @@ body {
     padding: 0;
     border: 0;
     background: transparent;
-    color: #737373;
+    color: var(--muted-text-color);
     font: inherit;
     font-size: 0.9rem;
     cursor: pointer;
@@ -290,7 +370,7 @@ body {
 
 .task-footer-button:hover,
 .task-footer-button:focus-visible {
-    color: #242424;
+    color: var(--text-color);
 }
 
 .priority-control {
@@ -307,9 +387,9 @@ body {
     grid-template-columns: repeat(4, 1.75rem);
     gap: 0.2rem;
     padding: 0.25rem;
-    border: 1px solid #e7e7e7;
+    border: 1px solid var(--border-color);
     border-radius: 0.3rem;
-    background: #ffffff;
+    background: var(--surface-color);
 }
 
 .priority-menu.is-open {
@@ -323,15 +403,15 @@ body {
     border: 0;
     border-radius: 0.2rem;
     background: transparent;
-    color: #737373;
+    color: var(--muted-text-color);
     font: inherit;
     cursor: pointer;
 }
 
 .priority-option:hover,
 .priority-option:focus-visible {
-    background: #f1f1f1;
-    color: #242424;
+    background: var(--hover-surface-color);
+    color: var(--text-color);
 }
 
 .task-save-button,
@@ -348,7 +428,7 @@ body {
     padding: 0;
     border: 0;
     background: transparent;
-    color: #737373;
+    color: var(--muted-text-color);
     font: inherit;
     font-size: 1.5rem;
     line-height: 1;
@@ -357,7 +437,7 @@ body {
 
 .task-delete-button:hover,
 .task-delete-button:focus-visible {
-    color: #242424;
+    color: var(--text-color);
 }
 
 .add-task-button {
@@ -367,7 +447,7 @@ body {
     padding: 0;
     border: 0;
     background: transparent;
-    color: #242424;
+    color: var(--text-color);
     font: inherit;
     cursor: pointer;
 }
@@ -390,64 +470,64 @@ body {
     width: 1.5rem;
     height: 1.5rem;
     place-items: center;
-    border: 1px solid #737373;
+    border: 1px solid var(--muted-text-color);
     border-radius: 50%;
-    color: #737373;
+    color: var(--muted-text-color);
     font-size: 1.25rem;
     line-height: 1;
 }
 
 .add-task-button:hover .add-task-icon,
 .add-task-button:focus-visible .add-task-icon {
-    border-color: #242424;
-    color: #242424;
+    border-color: var(--text-color);
+    color: var(--text-color);
 }
 
 .task-priority-button {
     padding-right: 1rem;
-    border-right: 1px solid #a09e9e;
+    border-right: 1px solid var(--strong-border-color);
 }
 
 .task-card[data-priority="1"] .task-priority-button,
 .priority-option-1,
 .filter-option-1 {
-    color: #b85c5c;
-    border-color: #b85c5c;
+    color: var(--priority-1-color);
+    border-color: var(--priority-1-color);
 }
 
 .task-card[data-priority="2"] .task-priority-button,
 .priority-option-2,
 .filter-option-2 {
-    color: #b8784a;
-    border-color: #b8784a;
+    color: var(--priority-2-color);
+    border-color: var(--priority-2-color);
 }
 
 .task-card[data-priority="3"] .task-priority-button,
 .priority-option-3,
 .filter-option-3 {
-    color: #a58a3b;
-    border-color: #a58a3b;
+    color: var(--priority-3-color);
+    border-color: var(--priority-3-color);
 }
 
 .task-card[data-priority="4"] .task-priority-button,
 .priority-option-4,
 .filter-option-4 {
-    color: #5f8a68;
-    border-color: #5f8a68;
+    color: var(--priority-4-color);
+    border-color: var(--priority-4-color);
 }
 
 .filter-option-1 input {
-    accent-color: #b85c5c;
+    accent-color: var(--priority-1-color);
 }
 
 .filter-option-2 input {
-    accent-color: #b8784a;
+    accent-color: var(--priority-2-color);
 }
 
 .filter-option-3 input {
-    accent-color: #a58a3b;
+    accent-color: var(--priority-3-color);
 }
 
 .filter-option-4 input {
-    accent-color: #5f8a68;
+    accent-color: var(--priority-4-color);
 }

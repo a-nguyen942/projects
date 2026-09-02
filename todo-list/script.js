@@ -2,6 +2,7 @@ let USER = "Tony";
 
 const welcomeText = document.createElement("h1");
 const header = document.querySelector(".header");
+const themeToggle = document.querySelector(".theme-toggle");
 const addTaskButton = document.querySelector(".add-task-button");
 const sortButton = document.querySelector(".sort-button");
 const sortMenu = document.querySelector(".sort-menu");
@@ -13,6 +14,7 @@ const centerTask = document.querySelector(".center-task");
 const centerSectionDisplay = document.querySelector("#center-section-display");
 const taskContent = document.querySelector(".center-task-content");
 const savedTaskContent = document.querySelector(".saved-task-list");
+const themeStorageKey = "todo-list-theme";
 let draftingAnimationId = null;
 let draftingDotCount = 1;
 let activeSort = "recent";
@@ -24,6 +26,53 @@ const visiblePriorities = new Set(
 
 welcomeText.textContent = `Welcome, ${USER}`;
 header.appendChild(welcomeText);
+
+function getPreferredTheme() {
+    try {
+        const savedTheme = window.localStorage.getItem(themeStorageKey);
+
+        if (savedTheme === "light" || savedTheme === "dark") {
+            return savedTheme;
+        }
+    } catch {
+        // Theme switching still works if local storage is unavailable.
+    }
+
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+}
+
+function applyTheme(theme) {
+    const isDarkMode = theme === "dark";
+    const toggleLabel = isDarkMode
+        ? "Switch to light mode"
+        : "Switch to dark mode";
+
+    document.body.classList.toggle("dark-mode", isDarkMode);
+    themeToggle.setAttribute("aria-pressed", String(isDarkMode));
+    themeToggle.setAttribute("aria-label", toggleLabel);
+    themeToggle.title = toggleLabel;
+}
+
+function saveTheme(theme) {
+    try {
+        window.localStorage.setItem(themeStorageKey, theme);
+    } catch {
+        // The selected theme remains active for the current session.
+    }
+}
+
+applyTheme(getPreferredTheme());
+
+themeToggle.addEventListener("click", () => {
+    const nextTheme = document.body.classList.contains("dark-mode")
+        ? "light"
+        : "dark";
+
+    applyTheme(nextTheme);
+    saveTheme(nextTheme);
+});
 
 function enterDraftingState() {
     if (draftingAnimationId !== null) {
