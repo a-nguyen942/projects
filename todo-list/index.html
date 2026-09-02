@@ -11,9 +11,18 @@
         <div class="header"></div>
         <div class="center-section">
             <div class="center-task">
-                <div class="center-task-topbar">
-                    <div id="center-section-display">Overview</div>
-                    <div class="topbar-actions">
+                <div class="center-task-layout">
+                    <div class="task-column">
+                        <div id="center-section-display">Overview</div>
+                        <div class="center-task-content"></div>
+                        <p class="empty-task-message">No current tasks</p>
+                        <div class="center-task-saved">
+                            <div class="saved-tasks-heading">Saved Tasks</div>
+                            <p class="empty-saved-task-message">No current tasks</p>
+                            <div class="saved-task-list"></div>
+                        </div>
+                    </div>
+                    <div class="task-actions">
                         <button class="add-task-button" type="button">
                             <span class="add-task-icon" aria-hidden="true">+</span>
                             <span>Add task</span>
@@ -59,13 +68,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="center-task-content"></div>
-                <p class="empty-task-message">No current tasks</p>
-                <div class="center-task-saved">
-                    <div class="saved-tasks-heading">Saved Tasks</div>
-                    <p class="empty-saved-task-message">No current tasks</p>
-                    <div class="saved-task-list"></div>
                 </div>
             </div>
             <div class="sidebar"></div>

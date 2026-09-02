@@ -61,18 +61,23 @@ body {
     font-size:24px;
 }
 
-.center-task-topbar{
-    display:flex;
-    justify-content: space-between;
+.center-task-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: flex-start;
-    padding:8px 40px 40px 40px;
+    gap: 2rem;
+    padding: 8px 40px 0;
 }
 
-.topbar-actions {
+.task-column {
+    min-width: 0;
+}
+
+.task-actions {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 0.5rem;
+    gap: 0.35rem;
 }
 
 .overview-sort-control,
@@ -169,7 +174,7 @@ body {
 }
 
 .center-task-content {
-    padding: 0 40px;
+    padding: 0;
 }
 
 .empty-task-message {
@@ -190,7 +195,7 @@ body {
 }
 
 .center-task-saved {
-    margin: 0 40px;
+    margin: 0;
 }
 
 .center-task.is-drafting .center-task-saved {
@@ -372,6 +377,10 @@ body {
 .center-task.is-drafting .overview-sort-control,
 .center-task.is-drafting .overview-filter-control {
     display: none;
+}
+
+.center-task.is-drafting .center-task-layout {
+    grid-template-columns: minmax(0, 1fr);
 }
 
 .add-task-icon {
