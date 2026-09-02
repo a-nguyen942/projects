@@ -118,6 +118,43 @@ function applyPriorityFilters() {
     });
 }
 
+function closeDropdownMenu(menu, button) {
+    menu.classList.remove("is-open");
+    button.setAttribute("aria-expanded", "false");
+}
+
+function closeAllDropdownMenus(exceptMenu = null) {
+    if (sortMenu !== exceptMenu) {
+        closeDropdownMenu(sortMenu, sortButton);
+    }
+
+    if (filterMenu !== exceptMenu) {
+        closeDropdownMenu(filterMenu, filterButton);
+    }
+
+    document.querySelectorAll(".priority-menu").forEach((priorityMenu) => {
+        if (priorityMenu !== exceptMenu) {
+            const priorityButton = priorityMenu
+                .closest(".priority-control")
+                .querySelector(".task-priority-button");
+
+            closeDropdownMenu(priorityMenu, priorityButton);
+        }
+    });
+}
+
+function focusFirstDropdownControl(menu) {
+    const firstControl = menu.querySelector("button, input");
+
+    firstControl?.focus();
+}
+
+function getOpenDropdownMenus() {
+    return Array.from(
+        document.querySelectorAll(".priority-menu.is-open, .sort-menu.is-open, .filter-menu.is-open")
+    );
+}
+
 function createTask() {
     const taskCard = document.createElement("article");
     const task = {
@@ -176,9 +213,16 @@ function createTask() {
     priorityButton.setAttribute("aria-expanded", "false");
     priorityButton.setAttribute("aria-haspopup", "true");
     priorityButton.addEventListener("click", () => {
-        const menuIsOpen = priorityMenu.classList.toggle("is-open");
+        const menuIsOpen = !priorityMenu.classList.contains("is-open");
+
+        closeAllDropdownMenus(priorityMenu);
+        priorityMenu.classList.toggle("is-open", menuIsOpen);
 
         priorityButton.setAttribute("aria-expanded", menuIsOpen);
+
+        if (menuIsOpen) {
+            focusFirstDropdownControl(priorityMenu);
+        }
     });
 
     priorityMenu.className = "priority-menu";
@@ -195,8 +239,7 @@ function createTask() {
             task.priority = priority;
             taskCard.dataset.priority = priority;
             priorityButton.textContent = `⚑ Priority ${priority}`;
-            priorityMenu.classList.remove("is-open");
-            priorityButton.setAttribute("aria-expanded", "false");
+            closeDropdownMenu(priorityMenu, priorityButton);
 
             if (taskCard.classList.contains("is-saved")) {
                 sortSavedTasks(activeSort);
@@ -258,11 +301,15 @@ function createTask() {
 addTaskButton.addEventListener("click", createTask);
 
 sortButton.addEventListener("click", () => {
-    const menuIsOpen = sortMenu.classList.toggle("is-open");
+    const menuIsOpen = !sortMenu.classList.contains("is-open");
 
+    closeAllDropdownMenus(sortMenu);
+    sortMenu.classList.toggle("is-open", menuIsOpen);
     sortButton.setAttribute("aria-expanded", menuIsOpen);
-    filterMenu.classList.remove("is-open");
-    filterButton.setAttribute("aria-expanded", "false");
+
+    if (menuIsOpen) {
+        focusFirstDropdownControl(sortMenu);
+    }
 });
 
 sortOptions.forEach((sortOption) => {
@@ -271,17 +318,20 @@ sortOptions.forEach((sortOption) => {
         sortSavedTasks(activeSort);
         sortButton.textContent = `↕ ${sortOption.textContent.trim()}`;
         sortButton.setAttribute("aria-label", `Sort saved tasks: ${sortOption.textContent.trim()}`);
-        sortMenu.classList.remove("is-open");
-        sortButton.setAttribute("aria-expanded", "false");
+        closeDropdownMenu(sortMenu, sortButton);
     });
 });
 
 filterButton.addEventListener("click", () => {
-    const menuIsOpen = filterMenu.classList.toggle("is-open");
+    const menuIsOpen = !filterMenu.classList.contains("is-open");
 
+    closeAllDropdownMenus(filterMenu);
+    filterMenu.classList.toggle("is-open", menuIsOpen);
     filterButton.setAttribute("aria-expanded", menuIsOpen);
-    sortMenu.classList.remove("is-open");
-    sortButton.setAttribute("aria-expanded", "false");
+
+    if (menuIsOpen) {
+        focusFirstDropdownControl(filterMenu);
+    }
 });
 
 filterOptions.forEach((filterOption) => {
@@ -294,4 +344,21 @@ filterOptions.forEach((filterOption) => {
 
         applyPriorityFilters();
     });
+});
+
+document.addEventListener("click", (event) => {
+    const openMenus = getOpenDropdownMenus();
+    const clickedOpenMenu = openMenus.some((menu) => menu.contains(event.target));
+
+    if (openMenus.length > 0 && !clickedOpenMenu) {
+        closeAllDropdownMenus();
+        event.preventDefault();
+        event.stopImmediatePropagation();
+    }
+}, true);
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+        closeAllDropdownMenus();
+    }
 });

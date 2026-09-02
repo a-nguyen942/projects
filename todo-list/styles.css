@@ -96,6 +96,21 @@ body {
     padding: 0;
 }
 
+.filter-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.filter-icon {
+    width: 1rem;
+    height: 1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+}
+
 .sort-menu,
 .filter-menu {
     display: none;
