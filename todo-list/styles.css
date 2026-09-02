@@ -38,7 +38,7 @@
 body.dark-mode {
     color-scheme: dark;
     --app-background: #1e1d1b;
-    --text-color: #f1efec;
+    --text-color: #dfdcd7;
     --muted-text-color: #bbb6b0;
     --subtle-text-color: #948f89;
     --border-color: #46423e;
