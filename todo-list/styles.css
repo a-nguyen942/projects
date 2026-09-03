@@ -470,6 +470,17 @@ button:not(:disabled):focus-visible {
 .priority-control {
     position: relative;
     display: inline-flex;
+    padding-right: 1rem;
+}
+
+.priority-control::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--strong-border-color);
+    content: "";
 }
 
 .priority-menu {
@@ -566,15 +577,6 @@ button:not(:disabled):focus-visible {
 }
 
 /* Priority controls */
-
-.task-priority-button {
-    padding-right: 0;
-}
-
-.task-reminder-button {
-    padding-left: 1rem;
-    border-left: 1px solid var(--strong-border-color);
-}
 
 .task-card[data-priority="1"] .task-priority-button,
 .priority-option-1,
