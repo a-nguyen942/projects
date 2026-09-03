@@ -436,6 +436,10 @@ textarea,
     margin-top: 0.5rem;
 }
 
+.task-card-footer.is-editing {
+    justify-content: flex-end;
+}
+
 .task-footer-button {
     padding: 0;
     border: 0;
@@ -449,6 +453,11 @@ textarea,
 .task-footer-button:hover,
 .task-footer-button:focus-visible {
     color: var(--text-color);
+}
+
+.task-cancel-edit-button {
+    padding-right: 1rem;
+    border-right: 1px solid var(--strong-border-color);
 }
 
 .priority-control {
@@ -497,10 +506,17 @@ textarea,
     margin-left: auto;
 }
 
-.task-delete-button {
+.task-card-actions {
     position: absolute;
     top: 0.75rem;
     right: 0.75rem;
+}
+
+.task-card.is-editing .task-card-actions {
+    display: none;
+}
+
+.task-card-action-button {
     width: 1.75rem;
     height: 1.75rem;
     padding: 0;
@@ -513,9 +529,13 @@ textarea,
     cursor: pointer;
 }
 
-.task-delete-button:hover,
-.task-delete-button:focus-visible {
+.task-card-action-button:hover,
+.task-card-action-button:focus-visible {
     color: var(--text-color);
+}
+
+.task-edit-button {
+    font-size: 1.25rem;
 }
 
 /* Priority controls */

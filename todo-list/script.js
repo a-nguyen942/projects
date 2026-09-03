@@ -252,7 +252,7 @@ function createTaskTextArea({ className, rows, placeholder, label, onInput }) {
 function createDeleteButton(taskCard) {
     const deleteButton = document.createElement("button");
 
-    deleteButton.className = "task-delete-button";
+    deleteButton.className = "task-card-action-button task-delete-button";
     deleteButton.type = "button";
     deleteButton.textContent = "×";
     deleteButton.setAttribute("aria-label", "Delete task");
@@ -262,6 +262,111 @@ function createDeleteButton(taskCard) {
     });
 
     return deleteButton;
+}
+
+function setTaskFieldsReadOnly(taskNameInput, taskDescriptionInput, isReadOnly) {
+    taskNameInput.readOnly = isReadOnly;
+    taskDescriptionInput.readOnly = isReadOnly;
+}
+
+function createEditButton(onEdit) {
+    const editButton = document.createElement("button");
+
+    editButton.className = "task-card-action-button task-edit-button";
+    editButton.type = "button";
+    editButton.textContent = "✎";
+    editButton.setAttribute("aria-label", "Edit task");
+    editButton.addEventListener("click", onEdit);
+
+    return editButton;
+}
+
+function createSaveEditsButton(onSaveEdits) {
+    const saveEditsButton = document.createElement("button");
+
+    saveEditsButton.className = "task-footer-button task-save-edits-button";
+    saveEditsButton.type = "button";
+    saveEditsButton.textContent = "✓ Save edits";
+    saveEditsButton.addEventListener("click", onSaveEdits);
+
+    return saveEditsButton;
+}
+
+function createCancelEditButton(onCancelEdit) {
+    const cancelEditButton = document.createElement("button");
+
+    cancelEditButton.className = "task-footer-button task-cancel-edit-button";
+    cancelEditButton.type = "button";
+    cancelEditButton.textContent = "× Cancel";
+    cancelEditButton.addEventListener("click", onCancelEdit);
+
+    return cancelEditButton;
+}
+
+function enterEditMode(editContext) {
+    const {
+        taskCard,
+        task,
+        taskNameInput,
+        taskDescriptionInput,
+        taskCardActions,
+        taskCardFooter,
+        cancelEditButton,
+        saveEditsButton
+    } = editContext;
+
+    task.editSnapshot = {
+        title: taskNameInput.value,
+        description: taskDescriptionInput.value
+    };
+    taskCard.classList.add("is-editing");
+    setTaskFieldsReadOnly(taskNameInput, taskDescriptionInput, false);
+    taskCardActions.replaceChildren();
+    taskCardFooter.classList.add("is-editing");
+    taskCardFooter.replaceChildren(cancelEditButton, saveEditsButton);
+    taskNameInput.focus();
+}
+
+function exitEditMode(editContext) {
+    const {
+        taskCard,
+        task,
+        taskNameInput,
+        taskDescriptionInput,
+        taskCardActions,
+        taskCardFooter,
+        editButton,
+        priorityControl,
+        reminderButton,
+        completedButton
+    } = editContext;
+
+    taskCard.classList.remove("is-editing");
+    setTaskFieldsReadOnly(taskNameInput, taskDescriptionInput, true);
+    taskCardActions.replaceChildren(editButton);
+    taskCardFooter.classList.remove("is-editing");
+    taskCardFooter.replaceChildren(priorityControl, reminderButton, completedButton);
+    delete task.editSnapshot;
+}
+
+function saveTaskEdits(editContext) {
+    exitEditMode(editContext);
+}
+
+function cancelTaskEdits(editContext) {
+    const { task, taskNameInput, taskDescriptionInput } = editContext;
+    const editSnapshot = task.editSnapshot;
+
+    if (editSnapshot) {
+        taskNameInput.value = editSnapshot.title;
+        taskDescriptionInput.value = editSnapshot.description;
+        task.title = editSnapshot.title;
+        task.description = editSnapshot.description;
+        resizeTaskTextArea(taskNameInput);
+        resizeTaskTextArea(taskDescriptionInput);
+    }
+
+    exitEditMode(editContext);
 }
 
 function createPriorityControl(taskCard, task) {
@@ -346,8 +451,9 @@ function createSaveButton(
     task,
     taskNameInput,
     taskDescriptionInput,
-    deleteButton,
-    completedButton
+    taskCardActions,
+    completedButton,
+    editButton
 ) {
     const saveButton = document.createElement("button");
 
@@ -375,7 +481,8 @@ function createSaveButton(
 
         taskCard.classList.add("is-saved");
         task.savedAt = Date.now();
-        deleteButton.remove();
+        setTaskFieldsReadOnly(taskNameInput, taskDescriptionInput, true);
+        taskCardActions.replaceChildren(editButton);
         saveButton.replaceWith(completedButton);
         savedTaskList.appendChild(taskCard);
         sortSavedTasks(appState.activeSort);
@@ -389,6 +496,7 @@ function createSaveButton(
 function createTask() {
     const task = createTaskData();
     const taskCard = document.createElement("article");
+    const taskCardActions = document.createElement("div");
     const deleteButton = createDeleteButton(taskCard);
     const taskNameInput = createTaskTextArea({
         className: "task-name-input",
@@ -411,22 +519,43 @@ function createTask() {
     const priorityControl = createPriorityControl(taskCard, task);
     const reminderButton = createReminderButton();
     const completedButton = createCompletedButton(taskCard);
+    const taskCardFooter = document.createElement("footer");
+    const editContext = {
+        taskCard,
+        task,
+        taskNameInput,
+        taskDescriptionInput,
+        taskCardActions,
+        taskCardFooter,
+        priorityControl,
+        reminderButton,
+        completedButton
+    };
+    const editButton = createEditButton(() => enterEditMode(editContext));
+    const saveEditsButton = createSaveEditsButton(() => saveTaskEdits(editContext));
+    const cancelEditButton = createCancelEditButton(() => cancelTaskEdits(editContext));
     const saveButton = createSaveButton(
         taskCard,
         task,
         taskNameInput,
         taskDescriptionInput,
-        deleteButton,
-        completedButton
+        taskCardActions,
+        completedButton,
+        editButton
     );
-    const taskCardFooter = document.createElement("footer");
+
+    editContext.editButton = editButton;
+    editContext.saveEditsButton = saveEditsButton;
+    editContext.cancelEditButton = cancelEditButton;
 
     taskCard.className = "task-card";
     taskCard.taskData = task;
+    taskCardActions.className = "task-card-actions";
     taskCardFooter.className = "task-card-footer";
+    taskCardActions.appendChild(deleteButton);
     taskCardFooter.append(priorityControl, reminderButton, saveButton);
     taskCard.append(
-        deleteButton,
+        taskCardActions,
         taskNameInput,
         taskDescriptionInput,
         taskCardFooter
