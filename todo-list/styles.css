@@ -33,6 +33,7 @@
     --priority-2-color: #b8784a;
     --priority-3-color: #a58a3b;
     --priority-4-color: #5f8a68;
+    --save-color: #b58a3f;
 }
 
 body.dark-mode {
@@ -49,6 +50,7 @@ body.dark-mode {
     --priority-2-color: #d49b72;
     --priority-3-color: #d1b968;
     --priority-4-color: #82aa8a;
+    --save-color: #d0aa69;
 }
 
 /* App shell */
@@ -72,7 +74,12 @@ textarea,
 .sort-menu,
 .filter-menu,
 .priority-menu {
-    transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+    transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+button:not(:disabled):hover,
+button:not(:disabled):focus-visible {
+    transform: translateX(0.15rem);
 }
 
 .center-section {
@@ -506,6 +513,26 @@ textarea,
     margin-left: auto;
 }
 
+.task-save-button {
+    color: var(--save-color);
+    font-weight: 600;
+}
+
+.task-save-button:hover,
+.task-save-button:focus-visible {
+    color: var(--save-color);
+}
+
+.task-completed-button {
+    color: var(--priority-4-color);
+    font-weight: 600;
+}
+
+.task-completed-button:hover,
+.task-completed-button:focus-visible {
+    color: var(--priority-4-color);
+}
+
 .task-card-actions {
     position: absolute;
     top: 0.75rem;
@@ -541,8 +568,12 @@ textarea,
 /* Priority controls */
 
 .task-priority-button {
-    padding-right: 1rem;
-    border-right: 1px solid var(--strong-border-color);
+    padding-right: 0;
+}
+
+.task-reminder-button {
+    padding-left: 1rem;
+    border-left: 1px solid var(--strong-border-color);
 }
 
 .task-card[data-priority="1"] .task-priority-button,

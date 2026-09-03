@@ -440,7 +440,7 @@ function createCompletedButton(taskCard) {
 
     completedButton.className = "task-footer-button task-completed-button";
     completedButton.type = "button";
-    completedButton.textContent = "✓ Completed";
+    completedButton.textContent = "▶ Completed";
     completedButton.addEventListener("click", () => completeTask(taskCard));
 
     return completedButton;
